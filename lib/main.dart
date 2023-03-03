@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Unit Test Demo',
       theme: ThemeData(primarySwatch: Colors.blue),
-      home: const MyHomePage(title: 'Unit Testing 101'),
+      home: const MyHomePage(title: 'Dependency Injection'),
     );
   }
 }
@@ -55,6 +55,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _temperatureCounter() async {
+    await counter.weather();
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,9 +81,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   FloatingActionButton(
-                    onPressed: _resetCounter,
-                    backgroundColor: Colors.red,
-                    child: const Icon(Icons.restart_alt),
+                    onPressed: _randomCounter,
+                    backgroundColor: Colors.black,
+                    child: const Icon(Icons.question_mark_rounded),
                   ),
                   Row(
                     children: [
@@ -94,16 +99,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                   FloatingActionButton(
-                    onPressed: _randomCounter,
-                    backgroundColor: Colors.black87,
-                    child: const Icon(Icons.question_mark_rounded),
+                    onPressed: _temperatureCounter,
+                    backgroundColor: Colors.red,
+                    child: const Icon(Icons.sunny),
                   ),
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 64),
+                padding: const EdgeInsets.only(top: 64, bottom: 128),
                 child: Text(
                     "Counter pressed for the ${Utils.intWithSuffix(counter.valueChangedCount)} time"),
+              ),
+              ElevatedButton(
+                onPressed: _resetCounter,
+                child: Text("Reset counter"),
               )
             ],
           ),
